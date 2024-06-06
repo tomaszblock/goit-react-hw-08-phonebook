@@ -20,7 +20,8 @@ export const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (token) {
-      dispatch(addContact({ id: nanoid(), name, phone: number, createdAt: new Date().toISOString() }, token));
+      // Aktualizacja poniższej linii, aby przesyłała jedynie wymagane pola: name i phone
+      dispatch(addContact({ name, phone: number }, token));
       setName('');
       setNumber('');
     }
