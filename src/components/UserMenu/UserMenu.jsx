@@ -4,12 +4,15 @@ import { logout } from '../Reducers/AuthSlice';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
-  const email = useSelector(state => state.auth.email);
+  const userEmail = useSelector(state => state.auth.email);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div>
-      <p>{email}</p>
-      <button onClick={() => dispatch(logout())}>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { store, persistor } from './Store/Store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ContactForm } from './ContactForm/ContactForm';
@@ -17,11 +17,18 @@ const AppContent = () => {
       <Navigation />
       <UserMenu />
       <Routes>
-  <Route path="/register" element={<Register />} />
-  <Route path="/login" element={<Login />} />
-  <PrivateRoute path="/contacts" element={<ContactsPage />} />
-  <Route path="/" element={<Navigate to="/login" />} />
-</Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route 
+          path="/contacts" 
+          element={
+            <PrivateRoute>
+              <ContactsPage />
+            </PrivateRoute>
+          } 
+        />
+      </Routes>
     </div>
   );
 };
