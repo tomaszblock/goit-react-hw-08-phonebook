@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { register } from '../Reducers/AuthSlice';
-import { login } from '../Reducers/AuthSlice';
+import { register, login } from '../Reducers/AuthSlice';
+import { Navigate } from 'react-router-dom';
 
 export const Register = () => {
   const dispatch = useDispatch();
-  const [name, setName] = useState(''); // Dodajemy pole 'name'
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
@@ -13,7 +13,7 @@ export const Register = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await dispatch(register({ name, email, password })); // Dodajemy name do obiektu przesyłanego do funkcji register
+      await dispatch(register({ name, email, password }));
       await dispatch(login({ email, password }));
       setIsRegistered(true);
     } catch (error) {
@@ -22,11 +22,7 @@ export const Register = () => {
   };
 
   if (isRegistered) {
-    return (
-      <div>
-        <p>You are registered and logged in.</p>
-      </div>
-    );
+    return <Navigate to="/contacts" />;
   }
 
   return (

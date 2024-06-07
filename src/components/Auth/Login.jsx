@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../Reducers/AuthSlice';
+import { Navigate } from 'react-router-dom';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -8,7 +9,6 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const error = useSelector(state => state.auth.error);
   const isLoggedIn = useSelector(state => state.auth.token);
-  const userEmail = useSelector(state => state.auth.email);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -17,11 +17,7 @@ export const Login = () => {
 
   // Sprawdzamy, czy użytkownik jest już zalogowany
   if (isLoggedIn) {
-    return (
-      <div>
-        <p>{userEmail} You are logged in.</p>
-      </div>
-    );
+    return <Navigate to="/contacts" />;
   }
 
   // Jeśli użytkownik nie jest zalogowany, wyświetlamy formularz logowania
@@ -41,10 +37,10 @@ export const Login = () => {
           Password:
           <input
             type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
         </label>
         <button type="submit">Login</button>
         {error && <p>{error.message}</p>}

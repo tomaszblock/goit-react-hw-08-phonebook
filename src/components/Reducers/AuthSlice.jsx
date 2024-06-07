@@ -31,14 +31,25 @@ export const login = createAsyncThunk('auth/login', async (userData, { rejectWit
   }
 });
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await axios.post(`${API_URL}/users/logout`);
+export const logout = createAsyncThunk('auth/logout', async (_, { getState }) => {
+  const { auth: { token } } = getState();
+  await axios.post(`${API_URL}/users/logout`, null, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 });
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: { token: null, email: null, error: null },
-  reducers: {},
+  reducers: {
+    clearAuthState: (state) => {
+      state.token = null;
+      state.email = null;
+      state.error = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.fulfilled, (state, action) => {
@@ -63,4 +74,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { clearAuthState } = authSlice.actions;
 export default authSlice.reducer;
