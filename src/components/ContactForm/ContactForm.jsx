@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { nanoid } from 'nanoid';
 import { addContact } from '../Reducers/ContactsSlice';
 
 export const ContactForm = () => {
@@ -20,8 +19,7 @@ export const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (token) {
-      // Aktualizacja poniższej linii, aby przesyłała jedynie wymagane pola: name i phone
-      dispatch(addContact({ name, phone: number }, token));
+      dispatch(addContact({ name, number }, token)); // Zmiana z 'phone' na 'number'
       setName('');
       setNumber('');
     }
